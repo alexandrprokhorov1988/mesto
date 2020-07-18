@@ -1,45 +1,18 @@
-import Popup from "./Popup.js";
+import React from 'react';
 
-export default class PopupWithForm extends Popup {
-  constructor({popupSelector, formSelector, formInputSelector, submitFormFunction}) {
-    super(popupSelector);
-    this._element = document.querySelector(`${formSelector}`);
-    this._formSubmitFunction = submitFormFunction;
-    this._formInputSelector = formInputSelector;
-    this._button = this._element.querySelector('.form__submit-button');
-    this._buttonOldValue = this._button.value;
-    this._setEventListeners();
-  }
+function PopupWithForm(props) {
 
-  _getInputValues() {
-    this._inputList = this._element.querySelectorAll(`${this._formInputSelector}`);
-    this._formValues = {};
-    this._inputList.forEach(input => {
-      this._formValues[input.name] = input.value;
-    });
-    return this._formValues;
-  };
-
-  _setEventListeners() {
-    super._setEventListeners();
-    this._element.addEventListener('submit', (event) => {
-      event.preventDefault();
-      this._button.disabled = true;
-      this.popupButtonLoadingText(true);
-      this._formSubmitFunction(this._getInputValues());
-    });
-  };
-
-  close() {
-    this._element.reset();
-    super.close();
-  }
-
-  popupButtonLoadingText(isLoading) {
-    if (isLoading) {
-      this._button.value = 'Сохранение...';
-    } else {
-      this._button.value = this._buttonOldValue;
-    }
-  }
+  return (
+    <div className={`popup popup_type_form ${props.isOpen ? 'popup_opened' : ''}`} id={`${props.name}Popup`}>
+      <div className={`popup__container popup__container_type_${props.name}`}>
+        <button type="button" className="popup__close-icon" onClick={props.onClose}/>
+        <h2 className="form__title">{props.title}</h2>
+        <form action="#" className="form" id={`${props.name}Form`} data-form={props.name} method="get" noValidate>
+          {props.children}
+        </form>
+      </div>
+    </div>
+  )
 }
+
+export default PopupWithForm;

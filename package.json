@@ -1,42 +1,35 @@
 {
-  "name": "mesto",
-  "version": "1.0.0",
-  "description": "Sprint 8 OOP",
-  "main": "index.js",
-  "scripts": {
-    "build": "rd /s /q dist && webpack",
-    "dev": "webpack-dev-server --open --watch",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexandrprokhorov1988/mesto.git"
-  },
-  "author": "Alexandr Prokhorov",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alexandrprokhorov1988/mesto/issues"
-  },
-  "homepage": "https://github.com/alexandrprokhorov1988/mesto#readme",
-  "devDependencies": {
-    "@babel/core": "^7.10.2",
-    "@babel/preset-env": "^7.10.2",
-    "autoprefixer": "^9.8.0",
-    "babel-loader": "^8.1.0",
-    "css-loader": "^3.6.0",
-    "cssnano": "^4.1.10",
-    "file-loader": "^6.0.0",
-    "gh-pages": "^3.1.0",
-    "html-loader": "^1.1.0",
-    "html-webpack-plugin": "^4.3.0",
-    "mini-css-extract-plugin": "^0.9.0",
-    "postcss-loader": "^3.0.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
-  },
+  "name": "mesto-react",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "corejs": "^1.0.0"
-  }
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {}
 }

@@ -5,6 +5,7 @@
 * Инструкция
 * Технологии
 * Примечания
+* Планы по доработке
 
 #### Описание
 * [Ссылка на макет в Figma (спринт 4)](https://www.figma.com/file/StZjf8HnoeLdiXS7dYrLAh/JavaScript.-Sprint-4)
@@ -31,6 +32,7 @@
 * Webpack
 * Fetch
 * Promise
+* React
 
 #### Примечания
   Для сборки проекта командой "npm run build" в package.json.
@@ -43,3 +45,6 @@
   ```sh
   "rd /s /q dist && webpack"
 ```
+
+#### Планы по доработке
+  Написать проект на React
