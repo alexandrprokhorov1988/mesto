@@ -6,28 +6,28 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(0);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(0);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(0);
-  const [selectedCard, setSelectedCard] = React.useState(0);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   function handleEditProfileClick() {
-    setEditProfilePopupOpen(1);
+    setEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
-    setAddPlacePopupOpen(1);
+    setAddPlacePopupOpen(true);
   }
 
   function handleEditAvatarClick() {
-    setEditAvatarPopupOpen(1);
+    setEditAvatarPopupOpen(true);
   }
 
   function closeAllPopups() {
-    setEditProfilePopupOpen(0);
-    setAddPlacePopupOpen(0);
-    setEditAvatarPopupOpen(0);
-    setSelectedCard(0);
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setEditAvatarPopupOpen(false);
+    setSelectedCard(null);
   }
 
   function handleCardClick(card) {
@@ -44,75 +44,48 @@ function App() {
         onCardClick={handleCardClick}
       />
       <Footer/>
-      <PopupWithForm
-        name="edit"
-        title="Редактировать профиль"
-        children={<>
-          <label className="form__label">
-            <input className="form__input" type="text" name="name" placeholder="Ваше имя" minLength="2" maxLength="40"
-                   required pattern="^[а-яёА-ЯЁa-zA-Z-\s]+$" id="name-input"/>
-            <span className="form__input-error" id="name-input-error"/>
-          </label>
-          <label className="form__label">
-            <input className="form__input" type="text" name="about" placeholder="Ваша профессия" minLength="2"
-                   maxLength="200" required id="profession-input" pattern="^[а-яёА-ЯЁa-zA-Z0-9-\s]+$"/>
-            <span className="form__input-error" id="profession-input-error"/>
-          </label>
-          <input className="form__submit-button" type="submit" name="submit" value="Сохранить"/>
-        </>}
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-      />
-      <PopupWithForm
-        name="add"
-        title="Новое место"
-        children={<>
-          <label className="form__label">
-            <input className="form__input" type="text" name="name" placeholder="Название" minLength="1"
-                   maxLength="30"
-                   required id="imgName-input" pattern="^[а-яёА-ЯЁa-zA-Z0-9-\s]+$"/>
-            <span className="form__input-error" id="imgName-input-error"/>
-          </label>
-          <label className="form__label">
-            <input className="form__input" type="url" name="link" placeholder="Ссылка на картинку" required
-                   id="link-input"/>
-            <span className="form__input-error" id="link-input-error"/>
-          </label>
-          <input className="form__submit-button form__submit-button_inactive" type="submit" name="submit"
-                 value="Создать"/>
-        </>}
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-      />
-      <PopupWithForm
-        name="confirm"
-        title="Вы уверены?"
-        children={<>
-          <button className="form__submit-button form__submit-button_type_confirm" type="button">Да
-          </button>
-        </>}
-        onClose={closeAllPopups}
-      />
-      <PopupWithForm
-        name="avatar"
-        title="Обновить аватар"
-        children={<>
-          <label className="form__label">
-            <input className="form__input" type="url" name="avatarUrl" placeholder="Ссылка на аватар"
-                   required
-                   id="avatarUrl-input"/>
-            <span className="form__input-error" id="avatarUrl-input-error"/>
-          </label>
-          <input className="form__submit-button form__submit-button_inactive" type="submit" name="submit"
-                 value="Сохранить"/>
-        </>}
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-      />
-      <ImagePopup
-        onClose={closeAllPopups}
-        card={selectedCard}
-      />
+      <PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
+        <label className="form__label">
+          <input className="form__input" type="text" name="name" placeholder="Ваше имя" minLength="2" maxLength="40"
+                 required pattern="^[а-яёА-ЯЁa-zA-Z-\s]+$" id="name-input"/>
+          <span className="form__input-error" id="name-input-error"/>
+        </label>
+        <label className="form__label">
+          <input className="form__input" type="text" name="about" placeholder="Ваша профессия" minLength="2"
+                 maxLength="200" required id="profession-input" pattern="^[а-яёА-ЯЁa-zA-Z0-9-\s]+$"/>
+          <span className="form__input-error" id="profession-input-error"/>
+        </label>
+        <input className="form__submit-button" type="submit" name="submit" value="Сохранить"/>
+      </PopupWithForm>
+      <PopupWithForm name="add" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+        <label className="form__label">
+          <input className="form__input" type="text" name="name" placeholder="Название" minLength="1"
+                 maxLength="30"
+                 required id="imgName-input" pattern="^[а-яёА-ЯЁa-zA-Z0-9-\s]+$"/>
+          <span className="form__input-error" id="imgName-input-error"/>
+        </label>
+        <label className="form__label">
+          <input className="form__input" type="url" name="link" placeholder="Ссылка на картинку" required
+                 id="link-input"/>
+          <span className="form__input-error" id="link-input-error"/>
+        </label>
+        <input className="form__submit-button form__submit-button_inactive" type="submit" name="submit"
+               value="Создать"/>
+      </PopupWithForm>
+      <PopupWithForm name="confirm" title="Вы уверены?" onClose={closeAllPopups}>
+        <button className="form__submit-button form__submit-button_type_confirm" type="button">Да</button>
+      </PopupWithForm>
+      <PopupWithForm name="avatar" title="Обновить аватар" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+        <label className="form__label">
+          <input className="form__input" type="url" name="avatarUrl" placeholder="Ссылка на аватар"
+                 required
+                 id="avatarUrl-input"/>
+          <span className="form__input-error" id="avatarUrl-input-error"/>
+        </label>
+        <input className="form__submit-button form__submit-button_inactive" type="submit" name="submit"
+               value="Сохранить"/>
+      </PopupWithForm>
+      <ImagePopup onClose={closeAllPopups} card={selectedCard}/>
     </div>
   );
 }

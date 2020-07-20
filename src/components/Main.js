@@ -3,7 +3,7 @@ import avatarBg from '../images/avatar-bg.png';
 import api from "../utils/api";
 import Card from "../components/Card";
 
-function Main(props) {
+function Main({onEditAvatar, onCardClick, onAddPlace, onEditProfile}) {
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
@@ -11,26 +11,19 @@ function Main(props) {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    api.getUserInfo()
-      .then((res) => {
-        setUserName(res.name);
-        setUserDescription(res.about);
-        setUserAvatar(res.avatar);
-        setUserId(res._id);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  React.useEffect(() => {
-    api.getInitialCards()
-      .then((res) => {
-        setCards(res.map(item => ({
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([user, card]) => {
+        setUserName(user.name);
+        setUserDescription(user.about);
+        setUserAvatar(user.avatar);
+        setUserId(user._id);
+        setCards(card.map(item => ({
           link: item.link,
           alt: item.alt,
           _id: item._id,
           name: item.name,
           likes: item.likes,
-          onCardClick: props.onCardClick
+          onCardClick: onCardClick
         })))
       })
       .catch((err) => console.log(err));
@@ -43,17 +36,17 @@ function Main(props) {
           <img src={userAvatar ? userAvatar : avatarBg} alt="Аватар." className="profile__avatar"/>
           <div className="profile__bg">
             <button type="button" className="profile__avatar-edit-button" data-button="editAvatar"
-                    onClick={props.onEditAvatar}/>
+                    onClick={onEditAvatar}/>
           </div>
         </div>
         <div className="profile__user-info">
           <div className="profile__row">
             <h1 className="profile__user-name" id={userId ? userId : ''}>{userName ? userName : 'Жак-Ив Кусто'}</h1>
-            <button type="button" className="profile__edit-button" data-button="edit" onClick={props.onEditProfile}/>
+            <button type="button" className="profile__edit-button" data-button="edit" onClick={onEditProfile}/>
           </div>
           <p className="profile__user-profession">{userDescription ? userDescription : 'Исследователь океана'}</p>
         </div>
-        <button type="button" className="profile__add-button" data-button="add" onClick={props.onAddPlace}/>
+        <button type="button" className="profile__add-button" data-button="add" onClick={onAddPlace}/>
       </section>
       <section className="elements">
         {cards.map((e) => <Card key={e._id}{...e}/>)}
