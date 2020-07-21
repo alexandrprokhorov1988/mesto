@@ -17,14 +17,7 @@ function Main({onEditAvatar, onCardClick, onAddPlace, onEditProfile}) {
         setUserDescription(user.about);
         setUserAvatar(user.avatar);
         setUserId(user._id);
-        setCards(card.map(item => ({
-          link: item.link,
-          alt: item.alt,
-          _id: item._id,
-          name: item.name,
-          likes: item.likes,
-          onCardClick: onCardClick
-        })))
+        setCards(card);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -49,7 +42,7 @@ function Main({onEditAvatar, onCardClick, onAddPlace, onEditProfile}) {
         <button type="button" className="profile__add-button" data-button="add" onClick={onAddPlace}/>
       </section>
       <section className="elements">
-        {cards.map((e) => <Card key={e._id}{...e}/>)}
+        {cards.map((e) => <Card key={e._id}{...e} onCardClick={onCardClick}/>)}
       </section>
     </main>
   );
