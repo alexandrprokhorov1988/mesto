@@ -4,6 +4,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
 import api from "../utils/api";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
@@ -52,20 +53,23 @@ function App() {
           onCardClick={handleCardClick}
         />
         <Footer/>
-        <PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen}
-                       onClose={closeAllPopups}>
-          <label className="form__label">
-            <input className="form__input" type="text" name="name" placeholder="Ваше имя" minLength="2" maxLength="40"
-                   required pattern="^[а-яёА-ЯЁa-zA-Z-\s]+$" id="name-input"/>
-            <span className="form__input-error" id="name-input-error"/>
-          </label>
-          <label className="form__label">
-            <input className="form__input" type="text" name="about" placeholder="Ваша профессия" minLength="2"
-                   maxLength="200" required id="profession-input" pattern="^[а-яёА-ЯЁa-zA-Z0-9-\s]+$"/>
-            <span className="form__input-error" id="profession-input-error"/>
-          </label>
-          <input className="form__submit-button" type="submit" name="submit" value="Сохранить"/>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+
+        {/*<PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen}*/}
+                       {/*onClose={closeAllPopups}>*/}
+          {/*<label className="form__label">*/}
+            {/*<input className="form__input" type="text" name="name" placeholder="Ваше имя" minLength="2" maxLength="40"*/}
+                   {/*required pattern="^[а-яёА-ЯЁa-zA-Z-\s]+$" id="name-input"/>*/}
+            {/*<span className="form__input-error" id="name-input-error"/>*/}
+          {/*</label>*/}
+          {/*<label className="form__label">*/}
+            {/*<input className="form__input" type="text" name="about" placeholder="Ваша профессия" minLength="2"*/}
+                   {/*maxLength="200" required id="profession-input" pattern="^[а-яёА-ЯЁa-zA-Z0-9-\s]+$"/>*/}
+            {/*<span className="form__input-error" id="profession-input-error"/>*/}
+          {/*</label>*/}
+          {/*<input className="form__submit-button" type="submit" name="submit" value="Сохранить"/>*/}
+        {/*</PopupWithForm>*/}
+
         <PopupWithForm name="add" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <label className="form__label">
             <input className="form__input" type="text" name="name" placeholder="Название" minLength="1"

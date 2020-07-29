@@ -26,6 +26,15 @@ function Main({onEditAvatar, onCardClick, onAddPlace, onEditProfile}) {
       .catch((err) => console.log(err));
   }
 
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+      .then(() => {
+        const newCards = cards.filter((c) => c._id !== card._id);
+        setCards(newCards);
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <main className="content">
       <section className="profile">
@@ -47,7 +56,10 @@ function Main({onEditAvatar, onCardClick, onAddPlace, onEditProfile}) {
         <button type="button" className="profile__add-button" data-button="add" onClick={onAddPlace}/>
       </section>
       <section className="elements">
-        {cards.map((e) => <Card key={e._id}{...e} onCardClick={onCardClick} onCardLike={handleCardLike}/>)}
+        {cards.map((e) => <Card key={e._id}{...e}
+                                onCardClick={onCardClick}
+                                onCardLike={handleCardLike}
+                                onCardDelete={handleCardDelete}/>)}
       </section>
     </main>
   );
