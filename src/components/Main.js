@@ -2,21 +2,15 @@ import React from 'react';
 import avatarBg from '../images/avatar-bg.png';
 import api from "../utils/api";
 import Card from "../components/Card";
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 function Main({onEditAvatar, onCardClick, onAddPlace, onEditProfile}) {
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
-  const [userId, setUserId] = React.useState('');
   const [cards, setCards] = React.useState([]);
+  const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([user, card]) => {
-        setUserName(user.name);
-        setUserDescription(user.about);
-        setUserAvatar(user.avatar);
-        setUserId(user._id);
+    api.getInitialCards()
+      .then((card) => {
         setCards(card);
       })
       .catch((err) => console.log(err));
@@ -26,7 +20,7 @@ function Main({onEditAvatar, onCardClick, onAddPlace, onEditProfile}) {
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
-          <img src={userAvatar ? userAvatar : avatarBg} alt="Аватар." className="profile__avatar"/>
+          <img src={currentUser.avatar ? currentUser.avatar : avatarBg} alt="Аватар." className="profile__avatar"/>
           <div className="profile__bg">
             <button type="button" className="profile__avatar-edit-button" data-button="editAvatar"
                     onClick={onEditAvatar}/>
@@ -34,10 +28,10 @@ function Main({onEditAvatar, onCardClick, onAddPlace, onEditProfile}) {
         </div>
         <div className="profile__user-info">
           <div className="profile__row">
-            <h1 className="profile__user-name" id={userId ? userId : ''}>{userName ? userName : 'Жак-Ив Кусто'}</h1>
+            <h1 className="profile__user-name" id={currentUser._id ? currentUser._id : ''}>{currentUser.name ? currentUser.name : 'Жак-Ив Кусто'}</h1>
             <button type="button" className="profile__edit-button" data-button="edit" onClick={onEditProfile}/>
           </div>
-          <p className="profile__user-profession">{userDescription ? userDescription : 'Исследователь океана'}</p>
+          <p className="profile__user-profession">{currentUser.about ? currentUser.about : 'Исследователь океана'}</p>
         </div>
         <button type="button" className="profile__add-button" data-button="add" onClick={onAddPlace}/>
       </section>
