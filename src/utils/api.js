@@ -89,7 +89,7 @@ class Api {
 
   likeCard(cardId, isLiked) {
     let method = '';
-    if (isLiked) {
+    if (!isLiked) {
       method = 'DELETE';
     } else {
       method = 'PUT';
