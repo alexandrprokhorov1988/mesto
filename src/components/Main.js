@@ -48,10 +48,10 @@ function Main({onEditAvatar, onCardClick, onAddPlace, onEditProfile}) {
         <div className="profile__user-info">
           <div className="profile__row">
             <h1 className="profile__user-name"
-                id={currentUser._id ? currentUser._id : ''}>{currentUser.name ? currentUser.name : 'Жак-Ив Кусто'}</h1>
+                id={currentUser._id ? currentUser._id : ''}>{currentUser.name}</h1>
             <button type="button" className="profile__edit-button" data-button="edit" onClick={onEditProfile}/>
           </div>
-          <p className="profile__user-profession">{currentUser.about ? currentUser.about : 'Исследователь океана'}</p>
+          <p className="profile__user-profession">{currentUser.about}</p>
         </div>
         <button type="button" className="profile__add-button" data-button="add" onClick={onAddPlace}/>
       </section>
