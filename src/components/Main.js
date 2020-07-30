@@ -10,9 +10,12 @@ function Main(props) {
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-container">
-          <img src={currentUser.avatar ? currentUser.avatar : avatarBg} alt="Аватар." className="profile__avatar"/>
+          <img src={currentUser.avatar ? currentUser.avatar : avatarBg}
+               alt="Аватар." className="profile__avatar"/>
           <div className="profile__bg">
-            <button type="button" className="profile__avatar-edit-button" data-button="editAvatar"
+            <button type="button"
+                    className="profile__avatar-edit-button"
+                    data-button="editAvatar"
                     onClick={props.onEditAvatar}/>
           </div>
         </div>
@@ -20,17 +23,23 @@ function Main(props) {
           <div className="profile__row">
             <h1 className="profile__user-name"
                 id={currentUser._id ? currentUser._id : ''}>{currentUser.name}</h1>
-            <button type="button" className="profile__edit-button" data-button="edit" onClick={props.onEditProfile}/>
+            <button type="button"
+                    className="profile__edit-button"
+                    data-button="edit"
+                    onClick={props.onEditProfile}/>
           </div>
           <p className="profile__user-profession">{currentUser.about}</p>
         </div>
-        <button type="button" className="profile__add-button" data-button="add" onClick={props.onAddPlace}/>
+        <button type="button"
+                className="profile__add-button"
+                data-button="add"
+                onClick={props.onAddPlace}/>
       </section>
       <section className="elements">
         {props.cards.map((e) => <Card key={e._id}{...e}
-                                onCardClick={props.onCardClick}
-                                onCardLike={props.onCardLike}
-                                onCardDelete={props.onCardDelete}/>)}
+                                      onCardClick={props.onCardClick}
+                                      onCardLike={props.onCardLike}
+                                      onCardDelete={props.onCardDelete}/>)}
       </section>
     </main>
   );
