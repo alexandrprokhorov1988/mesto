@@ -26,20 +26,33 @@ function App() {
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
   }
+
   function handleAddPlaceClick() {
     setAddPlacePopupOpen(true);
   }
+
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
   }
+
   function closeAllPopups() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setSelectedCard(null);
   }
+
   function handleCardClick(card) {
     setSelectedCard(card);
+  }
+
+  function handleUpdateUser({name, about}) {
+    api.setUserInfo({name, about})
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -53,21 +66,24 @@ function App() {
           onCardClick={handleCardClick}
         />
         <Footer/>
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}/>
 
         {/*<PopupWithForm name="edit" title="Редактировать профиль" isOpen={isEditProfilePopupOpen}*/}
-                       {/*onClose={closeAllPopups}>*/}
-          {/*<label className="form__label">*/}
-            {/*<input className="form__input" type="text" name="name" placeholder="Ваше имя" minLength="2" maxLength="40"*/}
-                   {/*required pattern="^[а-яёА-ЯЁa-zA-Z-\s]+$" id="name-input"/>*/}
-            {/*<span className="form__input-error" id="name-input-error"/>*/}
-          {/*</label>*/}
-          {/*<label className="form__label">*/}
-            {/*<input className="form__input" type="text" name="about" placeholder="Ваша профессия" minLength="2"*/}
-                   {/*maxLength="200" required id="profession-input" pattern="^[а-яёА-ЯЁa-zA-Z0-9-\s]+$"/>*/}
-            {/*<span className="form__input-error" id="profession-input-error"/>*/}
-          {/*</label>*/}
-          {/*<input className="form__submit-button" type="submit" name="submit" value="Сохранить"/>*/}
+        {/*onClose={closeAllPopups}>*/}
+        {/*<label className="form__label">*/}
+        {/*<input className="form__input" type="text" name="name" placeholder="Ваше имя" minLength="2" maxLength="40"*/}
+        {/*required pattern="^[а-яёА-ЯЁa-zA-Z-\s]+$" id="name-input"/>*/}
+        {/*<span className="form__input-error" id="name-input-error"/>*/}
+        {/*</label>*/}
+        {/*<label className="form__label">*/}
+        {/*<input className="form__input" type="text" name="about" placeholder="Ваша профессия" minLength="2"*/}
+        {/*maxLength="200" required id="profession-input" pattern="^[а-яёА-ЯЁa-zA-Z0-9-\s]+$"/>*/}
+        {/*<span className="form__input-error" id="profession-input-error"/>*/}
+        {/*</label>*/}
+        {/*<input className="form__submit-button" type="submit" name="submit" value="Сохранить"/>*/}
         {/*</PopupWithForm>*/}
 
         <PopupWithForm name="add" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
