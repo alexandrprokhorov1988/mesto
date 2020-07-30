@@ -18,7 +18,9 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({
     name: 'Жак-Ив-Кусто',
     about: 'Исследователь океана',
-    avatar: null});
+    avatar: null
+  });
+  const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -27,7 +29,14 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(currentUser);
+
+  React.useEffect(() => {
+    api.getInitialCards()
+      .then((card) => {
+        setCards(card);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
@@ -70,13 +79,32 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleAddPlace({avatar}) {
-    // api.setUserAvatar(avatar)
-    //   .then((res) => {
-    //     setCurrentUser(res);
-    //     closeAllPopups();
-    //   })
-    //   .catch((err) => console.log(err));
+  function handleAddPlace({name, link}) {
+    api.setNewCard({name, link})
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    api.likeCard(card._id, !isLiked)
+      .then((newCard) => {
+        const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+        setCards(newCards);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+      .then(() => {
+        const newCards = cards.filter((c) => c._id !== card._id);
+        setCards(newCards);
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -88,6 +116,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          cards={cards}
         />
         <Footer/>
         <EditProfilePopup
@@ -98,9 +129,9 @@ function App() {
           <button className="form__submit-button form__submit-button_type_confirm" type="button">Да</button>
         </PopupWithForm>
         <AddPlacePopup
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-        onAddPlace={handleAddPlace}
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlace}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
