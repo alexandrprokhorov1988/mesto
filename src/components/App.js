@@ -21,6 +21,7 @@ function App() {
     avatar: null
   });
   const [cards, setCards] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -62,30 +63,42 @@ function App() {
   }
 
   function handleUpdateUser({name, about}) {
+    setIsLoading(true);
     api.setUserInfo({name, about})
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleUpdateAvatar({avatar}) {
+    setIsLoading(true);
     api.setUserAvatar(avatar)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleAddPlace({name, link}) {
+    setIsLoading(true);
     api.setNewCard({name, link})
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleCardLike(card) {
@@ -124,7 +137,8 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}/>
+          onUpdateUser={handleUpdateUser}
+          isLoading={isLoading}/>
         <PopupWithForm name="confirm" title="Вы уверены?" onClose={closeAllPopups}>
           <button className="form__submit-button form__submit-button_type_confirm" type="button">Да</button>
         </PopupWithForm>
@@ -132,11 +146,13 @@ function App() {
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlace}
+          isLoading={isLoading}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}/>
+          onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isLoading}/>
         <ImagePopup onClose={closeAllPopups} card={selectedCard}/>
       </CurrentUserContext.Provider>
     </div>

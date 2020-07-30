@@ -1,7 +1,7 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
+function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, isLoading}) {
   const avatarRef = React.useRef();
 
   function handleSubmit(e) {
@@ -32,7 +32,8 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
       <input className="form__submit-button"
              type="submit"
              name="submit"
-             value="Сохранить"/>
+             disabled={isLoading}
+             value={`${isLoading ? 'Сохранение' : 'Сохранить'}`}/>
     </PopupWithForm>
   );
 }

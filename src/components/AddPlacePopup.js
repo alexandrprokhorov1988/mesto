@@ -1,7 +1,7 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({isOpen, onClose, onAddPlace}) {
+function AddPlacePopup({isOpen, onClose, onAddPlace, isLoading}) {
   const [name, setName] = React.useState('');
   const [link, setLink] = React.useState('');
 
@@ -59,7 +59,9 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
       <input className="form__submit-button"
              type="submit"
              name="submit"
-             value="Создать"/>
+             disabled={isLoading}
+             value={`${isLoading ? 'Сохранение' : 'Создать'}`}
+             />
     </PopupWithForm>
   );
 }
