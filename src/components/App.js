@@ -26,16 +26,9 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
-    api.getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  React.useEffect(() => {
-    api.getInitialCards()
-      .then((card) => {
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([user, card]) => {
+        setCurrentUser(user);
         setCards(card);
       })
       .catch((err) => console.log(err));
