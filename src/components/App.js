@@ -2,11 +2,11 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import ConfirmPopup from './ConfirmPopup';
 import api from "../utils/api";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
@@ -14,6 +14,7 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [isConfirmPopupOpen, setConfirmPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({
     name: 'Жак-Ив-Кусто',
@@ -21,6 +22,7 @@ function App() {
     avatar: null
   });
   const [cards, setCards] = React.useState([]);
+  const [cardId, setCardId] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
@@ -56,6 +58,7 @@ function App() {
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setSelectedCard(null);
+    setConfirmPopupOpen(false);
   }
 
   function handleCardClick(card) {
@@ -111,13 +114,23 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleCardDelete(card) {
-    api.deleteCard(card._id)
+  function handleConfirm(card) {
+    setConfirmPopupOpen(true);
+    setCardId(card._id);
+  }
+
+  function handleCardDelete() {
+    setIsLoading(true);
+    api.deleteCard(cardId)
       .then(() => {
-        const newCards = cards.filter((c) => c._id !== card._id);
+        const newCards = cards.filter((c) => c._id !== cardId);
         setCards(newCards);
+        closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   return (
@@ -130,18 +143,16 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
           cards={cards}
+          onCardDelete={handleConfirm}
         />
         <Footer/>
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
-          isLoading={isLoading}/>
-        <PopupWithForm name="confirm" title="Вы уверены?" onClose={closeAllPopups}>
-          <button className="form__submit-button form__submit-button_type_confirm" type="button">Да</button>
-        </PopupWithForm>
+          isLoading={isLoading}
+        />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
@@ -152,7 +163,14 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
-          isLoading={isLoading}/>
+          isLoading={isLoading}
+        />
+        <ConfirmPopup
+          isOpen={isConfirmPopupOpen}
+          onClose={closeAllPopups}
+          onCardDelete={handleCardDelete}
+          isLoading={isLoading}
+        />
         <ImagePopup onClose={closeAllPopups} card={selectedCard}/>
       </CurrentUserContext.Provider>
     </div>
