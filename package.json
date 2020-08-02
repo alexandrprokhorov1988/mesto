@@ -1,8 +1,10 @@
 {
   "name": "mesto-react",
   "version": "0.1.0",
+  "description": "Sprint 12 React",
   "private": true,
   "homepage": "https://alexandrprokhorov1988.github.io/mesto/",
+  "author": "Alexandr Prokhorov",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",

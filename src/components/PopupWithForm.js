@@ -1,19 +1,13 @@
 import React from 'react';
 import FormValidator from "../utils/validation";
+import validation from "../utils/constants";
 
 function PopupWithForm({isOpen, name, title, onClose, children, onSubmit}) {
 
   const runValidation = () => {
     const forms = Array.from(document.querySelectorAll('.form'));
     forms.forEach((formElement) => {
-      new FormValidator({
-        formSelector: '.form',
-        inputSelector: '.form__input',
-        submitButtonSelector: '.form__submit-button',
-        inactiveButtonClass: 'form__submit-button_inactive',
-        inputErrorClass: 'form__input_type_error',
-        errorClass: 'form__input-error_visible',
-      }, formElement).enableValidation();
+      new FormValidator(validation, formElement).enableValidation();
     });
   };
   runValidation();
