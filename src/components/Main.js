@@ -2,6 +2,7 @@ import React from 'react';
 import avatarBg from '../images/avatar-bg.png';
 import Card from "../components/Card";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
+import Loader from "../components/Loader";
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
@@ -36,7 +37,7 @@ function Main(props) {
                 onClick={props.onAddPlace}/>
       </section>
       <section className="elements">
-        {props.cards.map((card) => (
+        {props.isLoading ? <Loader/> : props.cards.map((card) => (
           <Card key={card._id}{...card}
                 onCardClick={props.onCardClick}
                 onCardLike={props.onCardLike}

@@ -24,15 +24,18 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [cardId, setCardId] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoadingLoader, setIsLoadingLoader] = React.useState(false);
   const [isImgPopupOpen, setImgPopupOpen] = React.useState(false);
 
   React.useEffect(() => {
+    setIsLoadingLoader(true);
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([user, card]) => {
         setCurrentUser(user);
         setCards(card);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoadingLoader(false))
   }, []);
 
   function handleEscClose(e) {
@@ -151,6 +154,7 @@ function App() {
           onCardLike={handleCardLike}
           cards={cards}
           onCardDelete={handleConfirm}
+          isLoading={isLoadingLoader}
         />
         <Footer/>
         <EditProfilePopup
