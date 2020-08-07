@@ -25,8 +25,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, isLoading}) {
   }
 
   return (
-    <>
-      {isOpen && <PopupWithForm name="add"
+      <PopupWithForm name="add"
                                 title="Новое место"
                                 isOpen={isOpen}
                                 onClose={onClose}
@@ -63,8 +62,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, isLoading}) {
                disabled={isLoading}
                value={`${isLoading ? 'Сохранение' : 'Создать'}`}
         />
-      </PopupWithForm>}
-    </>
+      </PopupWithForm>
   );
 }
 

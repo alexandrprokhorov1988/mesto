@@ -29,8 +29,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, isLoading}) {
   }, [currentUser]);
 
   return (
-    <>
-    {isOpen && <PopupWithForm name="edit"
+    <PopupWithForm name="edit"
                    title="Редактировать профиль"
                    isOpen={isOpen}
                    onClose={onClose}
@@ -68,8 +67,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, isLoading}) {
              name="submit"
              disabled={isLoading}
              value={`${isLoading ? 'Сохранение' : 'Сохранить'}`}/>
-    </PopupWithForm>}
-    </>
+    </PopupWithForm>
   );
 
 }

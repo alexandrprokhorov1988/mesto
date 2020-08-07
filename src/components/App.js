@@ -24,6 +24,7 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [cardId, setCardId] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isImgPopupOpen, setImgPopupOpen] = React.useState(false);
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -59,13 +60,14 @@ function App() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
-    setSelectedCard(null);
+    setImgPopupOpen(false);
     setConfirmPopupOpen(false);
     document.removeEventListener('keydown', handleEscClose);
   }
 
   function handleCardClick(card) {
     setSelectedCard(card);
+    setImgPopupOpen(true);
     document.addEventListener('keydown', handleEscClose);
   }
 
@@ -175,7 +177,7 @@ function App() {
           onCardDelete={handleCardDelete}
           isLoading={isLoading}
         />
-        {selectedCard && <ImagePopup onClose={closeAllPopups} card={selectedCard}/>}
+        <ImagePopup  isOpen={isImgPopupOpen} onClose={closeAllPopups} card={selectedCard}/>
       </CurrentUserContext.Provider>
     </div>
   );
