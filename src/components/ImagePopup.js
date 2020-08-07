@@ -2,6 +2,18 @@ import React from 'react';
 
 function ImagePopup({card, onClose}) {
 
+  React.useEffect(() => {
+    function handleEscClose(e) {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    }
+    document.addEventListener('keydown', handleEscClose);
+    return () => {
+      document.removeEventListener('keydown', handleEscClose);
+    };
+  });
+
   return (
     <div className={`popup popup_type_img ${card ? 'popup_opened' : ''}`}
          id="imgPopup">

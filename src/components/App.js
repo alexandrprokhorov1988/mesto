@@ -175,7 +175,7 @@ function App() {
           onCardDelete={handleCardDelete}
           isLoading={isLoading}
         />
-        <ImagePopup onClose={closeAllPopups} card={selectedCard}/>
+        {selectedCard && <ImagePopup onClose={closeAllPopups} card={selectedCard}/>}
       </CurrentUserContext.Provider>
     </div>
   );
