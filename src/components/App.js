@@ -34,16 +34,25 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
+  function handleEscClose(e) {
+    if (e.key === 'Escape') {
+      closeAllPopups();
+    }
+  }
+
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
+    document.addEventListener('keydown', handleEscClose);
   }
 
   function handleAddPlaceClick() {
     setAddPlacePopupOpen(true);
+    document.addEventListener('keydown', handleEscClose);
   }
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
+    document.addEventListener('keydown', handleEscClose);
   }
 
   function closeAllPopups() {
@@ -52,10 +61,12 @@ function App() {
     setEditAvatarPopupOpen(false);
     setSelectedCard(null);
     setConfirmPopupOpen(false);
+    document.removeEventListener('keydown', handleEscClose);
   }
 
   function handleCardClick(card) {
     setSelectedCard(card);
+    document.addEventListener('keydown', handleEscClose);
   }
 
   function handleUpdateUser({name, about}) {
