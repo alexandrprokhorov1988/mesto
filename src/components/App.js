@@ -177,7 +177,7 @@ function App() {
           onCardDelete={handleCardDelete}
           isLoading={isLoading}
         />
-        <ImagePopup  isOpen={isImgPopupOpen} onClose={closeAllPopups} card={selectedCard}/>
+        <ImagePopup isOpen={isImgPopupOpen} onClose={closeAllPopups} card={selectedCard}/>
       </CurrentUserContext.Provider>
     </div>
   );
