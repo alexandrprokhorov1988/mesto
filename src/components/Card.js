@@ -22,7 +22,7 @@ function Card({link, name, alt, _id, likes, owner, onCardClick, onCardLike, onCa
     <article className="card">
       <img className="card__img"
            src={link}
-           alt={alt}
+           alt={alt || 'Картинка'}
            id={_id}
            onClick={handleClick}/>
       <button type="button"
